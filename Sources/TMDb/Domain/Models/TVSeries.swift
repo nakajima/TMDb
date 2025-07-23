@@ -23,7 +23,6 @@ import Foundation
 /// A model representing a TV series.
 ///
 public struct TVSeries: Identifiable, Codable, Equatable, Hashable, Sendable {
-
     ///
     /// TV series identifier.
     ///
@@ -163,6 +162,12 @@ public struct TVSeries: Identifiable, Codable, Equatable, Hashable, Sendable {
     ///
     public let isAdultOnly: Bool?
 
+    public let job: String?
+    public let department: String?
+    public let creditID: String?
+    public let character: String?
+    public let order: Int?
+
     ///
     /// Creates a TV series object.
     ///
@@ -222,7 +227,12 @@ public struct TVSeries: Identifiable, Codable, Equatable, Hashable, Sendable {
         popularity: Double? = nil,
         voteAverage: Double? = nil,
         voteCount: Int? = nil,
-        isAdultOnly: Bool? = nil
+        isAdultOnly: Bool? = nil,
+        character: String? = nil,
+        job: String? = nil,
+        department: String? = nil,
+        order: Int? = nil,
+        creditID: String? = nil,
     ) {
         self.id = id
         self.name = name
@@ -251,12 +261,15 @@ public struct TVSeries: Identifiable, Codable, Equatable, Hashable, Sendable {
         self.voteAverage = voteAverage
         self.voteCount = voteCount
         self.isAdultOnly = isAdultOnly
+        self.character = character
+        self.job = job
+        self.department = department
+        self.order = order
+        self.creditID = creditID
     }
-
 }
 
 extension TVSeries {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -285,6 +298,12 @@ extension TVSeries {
         case firstAirDate
         case homepageURL = "homepage"
         case isAdultOnly = "adult"
+        // When getting a show back in credits we'll get these
+        case creditID = "credit_id"
+        case job
+        case department
+        case character
+        case order
     }
 
     ///
@@ -308,7 +327,8 @@ extension TVSeries {
         self.tagline = try container.decodeIfPresent(String.self, forKey: .tagline)
         self.originalName = try container.decodeIfPresent(String.self, forKey: .originalName)
         self.originalLanguage = try container.decodeIfPresent(
-            String.self, forKey: .originalLanguage)
+            String.self, forKey: .originalLanguage
+        )
         self.overview = try container.decodeIfPresent(String.self, forKey: .overview)
         self.episodeRunTime = try container.decodeIfPresent([Int].self, forKey: .episodeRunTime)
         self.numberOfSeasons = try container.decodeIfPresent(Int.self, forKey: .numberOfSeasons)
@@ -345,13 +365,19 @@ extension TVSeries {
         self.lastAirDate = try container.decodeIfPresent(Date.self, forKey: .lastAirDate)
         self.networks = try container.decodeIfPresent([Network].self, forKey: .networks)
         self.productionCompanies = try container.decodeIfPresent(
-            [ProductionCompany].self, forKey: .productionCompanies)
+            [ProductionCompany].self, forKey: .productionCompanies
+        )
         self.status = try container.decodeIfPresent(String.self, forKey: .status)
         self.type = try container.decodeIfPresent(String.self, forKey: .type)
         self.popularity = try container.decodeIfPresent(Double.self, forKey: .popularity)
         self.voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage)
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
-    }
 
+        self.character = try container.decodeIfPresent(String.self, forKey: .character)
+        self.job = try container.decodeIfPresent(String.self, forKey: .job)
+        self.department = try container.decodeIfPresent(String.self, forKey: .department)
+        self.order = try container.decodeIfPresent(Int.self, forKey: .order)
+        self.creditID = try container.decodeIfPresent(String.self, forKey: .creditID)
+    }
 }

@@ -23,7 +23,6 @@ import Foundation
 /// A model representing a movie.
 ///
 public struct Movie: Identifiable, Codable, Equatable, Hashable, Sendable {
-
     ///
     /// Movie identifier.
     ///
@@ -148,6 +147,12 @@ public struct Movie: Identifiable, Codable, Equatable, Hashable, Sendable {
     ///
     public let isAdultOnly: Bool?
 
+    public let job: String?
+		public let department: String?
+    public let creditID: String?
+    public let character: String?
+    public let order: Int?
+
     ///
     /// Creates a movie object.
     ///
@@ -201,7 +206,12 @@ public struct Movie: Identifiable, Codable, Equatable, Hashable, Sendable {
         voteAverage: Double? = nil,
         voteCount: Int? = nil,
         hasVideo: Bool? = nil,
-        isAdultOnly: Bool? = nil
+        isAdultOnly: Bool? = nil,
+        character: String? = nil,
+        job: String? = nil,
+				department: String? = nil,
+        order: Int? = nil,
+        creditID: String? = nil,
     ) {
         self.id = id
         self.title = title
@@ -227,12 +237,15 @@ public struct Movie: Identifiable, Codable, Equatable, Hashable, Sendable {
         self.voteCount = voteCount
         self.hasVideo = hasVideo
         self.isAdultOnly = isAdultOnly
+        self.character = character
+        self.job = job
+				self.department = department
+        self.order = order
+        self.creditID = creditID
     }
-
 }
 
 extension Movie {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case title
@@ -258,6 +271,13 @@ extension Movie {
         case voteCount
         case hasVideo = "video"
         case isAdultOnly = "adult"
+
+        // When getting a movie back in credits we'll get these
+        case creditID = "credit_id"
+        case job
+				case department
+        case character
+        case order
     }
 
     ///
@@ -281,7 +301,8 @@ extension Movie {
         self.tagline = try container.decodeIfPresent(String.self, forKey: .tagline)
         self.originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle)
         self.originalLanguage = try container.decodeIfPresent(
-            String.self, forKey: .originalLanguage)
+            String.self, forKey: .originalLanguage
+        )
         self.overview = try container.decodeIfPresent(String.self, forKey: .overview)
         self.runtime = try container.decodeIfPresent(Int.self, forKey: .runtime)
         self.genres = try container.decodeIfPresent([Genre].self, forKey: .genres)
@@ -314,16 +335,24 @@ extension Movie {
         self.imdbID = try container.decodeIfPresent(String.self, forKey: .imdbID)
         self.status = try container.decodeIfPresent(Status.self, forKey: .status)
         self.productionCompanies = try container.decodeIfPresent(
-            [ProductionCompany].self, forKey: .productionCompanies)
+            [ProductionCompany].self, forKey: .productionCompanies
+        )
         self.productionCountries = try container.decodeIfPresent(
-            [ProductionCountry].self, forKey: .productionCountries)
+            [ProductionCountry].self, forKey: .productionCountries
+        )
         self.spokenLanguages = try container.decodeIfPresent(
-            [SpokenLanguage].self, forKey: .spokenLanguages)
+            [SpokenLanguage].self, forKey: .spokenLanguages
+        )
         self.popularity = try container.decodeIfPresent(Double.self, forKey: .popularity)
         self.voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage)
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.hasVideo = try container.decodeIfPresent(Bool.self, forKey: .hasVideo)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
-    }
 
+        self.character = try container.decodeIfPresent(String.self, forKey: .character)
+        self.job = try container.decodeIfPresent(String.self, forKey: .job)
+				self.department = try container.decodeIfPresent(String.self, forKey: .department)
+        self.order = try container.decodeIfPresent(Int.self, forKey: .order)
+        self.creditID = try container.decodeIfPresent(String.self, forKey: .creditID)
+    }
 }
