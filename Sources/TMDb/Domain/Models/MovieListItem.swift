@@ -23,7 +23,6 @@ import Foundation
 /// A model representing a movie.
 ///
 public struct MovieListItem: Identifiable, Codable, Equatable, Hashable, Sendable {
-
     ///
     /// Movie identifier.
     ///
@@ -148,18 +147,16 @@ public struct MovieListItem: Identifiable, Codable, Equatable, Hashable, Sendabl
         self.hasVideo = hasVideo
         self.isAdultOnly = isAdultOnly
     }
-
 }
 
 extension MovieListItem {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case title
         case originalTitle
         case originalLanguage
         case overview
-        case genreIDs = "genreIds"
+        case genreIDs = "genre_ids"
         case releaseDate
         case posterPath
         case backdropPath
@@ -211,5 +208,4 @@ extension MovieListItem {
         self.hasVideo = try container.decodeIfPresent(Bool.self, forKey: .hasVideo)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
     }
-
 }

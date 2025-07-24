@@ -23,7 +23,6 @@ import Foundation
 /// A model representing a TV series.
 ///
 public struct TVSeriesListItem: Identifiable, Codable, Equatable, Hashable, Sendable {
-
     ///
     /// TV series identifier.
     ///
@@ -148,18 +147,16 @@ public struct TVSeriesListItem: Identifiable, Codable, Equatable, Hashable, Send
         self.voteCount = voteCount
         self.isAdultOnly = isAdultOnly
     }
-
 }
 
 extension TVSeriesListItem {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case name
         case originalName
         case originalLanguage
         case overview
-        case genreIDs = "genreIds"
+        case genreIDs = "genre_ids"
         case originCountries = "originCountry"
         case posterPath
         case backdropPath
@@ -211,5 +208,4 @@ extension TVSeriesListItem {
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
     }
-
 }
