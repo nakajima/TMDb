@@ -188,7 +188,7 @@ extension TVSeriesListItem {
         self.originalName = try container.decode(String.self, forKey: .originalName)
         self.originalLanguage = try container.decode(String.self, forKey: .originalLanguage)
         self.overview = try container.decode(String.self, forKey: .overview)
-        self.genreIDs = try container.decode([Genre.ID].self, forKey: .genreIDs)
+        self.genreIDs = try container.decodeIfPresent([Genre.ID].self, forKey: .genreIDs) ?? []
 
         // Need to deal with empty strings - date decoding will fail with an empty string
         let firstAirDateString = try container.decodeIfPresent(String.self, forKey: .firstAirDate)
